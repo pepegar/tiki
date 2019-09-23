@@ -28,9 +28,9 @@ lazy val V = new {
   val circe = "0.12.1"
   val droste = "0.7.0"
   val specs2 = "4.7.1"
-  val discipline = "0.11.1"
+  val discipline = "1.0.0"
   val kindProjector = "0.10.3"
-  val betterMonadicFor = "0.7.0"
+  val betterMonadicFor = "0.3.1"
 }
 
 
@@ -48,7 +48,7 @@ lazy val commonSettings = Seq(
   scalafmtOnCompile in ThisBuild := true,
 
   addCompilerPlugin("org.typelevel" % "kind-projector" % V.kindProjector cross CrossVersion.binary),
-  addCompilerPlugin("com.olegpy" %% "better-monadic-for" % V.betterMonadicFor cross CrossVersion.full),
+  addCompilerPlugin("com.olegpy" %% "better-monadic-for" % V.betterMonadicFor),
   libraryDependencies ++= Seq(
     "org.typelevel"               %% "cats-core"                  % V.cats,
 
@@ -69,7 +69,7 @@ lazy val commonSettings = Seq(
 
     "org.specs2"                  %% "specs2-core"                % V.specs2       % Test,
     "org.specs2"                  %% "specs2-scalacheck"          % V.specs2       % Test,
-    "org.typelevel"               %% "discipline"                 % V.discipline   % Test,
+    "org.typelevel"               %% "discipline-core"            % V.discipline   % Test,
   )
 )
 
