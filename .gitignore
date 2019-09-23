@@ -32,6 +32,8 @@ project/plugins/project/
 .worksheet
 .ensime
 .idea
+.metals
+.bloop
 
 ### Node ###
 node_modules/
