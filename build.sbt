@@ -9,14 +9,21 @@ inThisBuild(List(
       "pepe@pepegar.com",
       url("https://pepegar.com")
     )
-  )
+  ),
+  scalaVersion := "2.13.1",
 ))
 
+lazy val root = project.dependsOn(core, docs).aggregate(core, docs)
+
 lazy val core = project.in(file("."))
-    .settings(commonSettings)
+    .settings(commonSettings, releaseSettings)
     .settings(
       name := "tiki"
     )
+
+lazy val docs = project.in(file("docs"))
+    .dependsOn(core)
+    .enablePlugins(MicrositesPlugin)
 
 lazy val V = new {
   val cats = "2.0.0"
@@ -41,9 +48,6 @@ onLoad in Global := { s =>
 
 // General Settings
 lazy val commonSettings = Seq(
-  organization := "com.pepegar",
-
-  scalaVersion := "2.13.1",
   crossScalaVersions := Seq(scalaVersion.value, "2.12.10"),
   scalafmtOnCompile in ThisBuild := true,
 
@@ -153,6 +157,20 @@ lazy val mimaSettings = {
     }
   )
 }
+
+lazy val micrositesSettings = Seq(
+    micrositeName := "tiki",
+    micrositeDescription := "Purely functional HTTP client",
+    micrositeBaseUrl := "tiki",
+    micrositeDocumentationUrl := s"https://www.javadoc.io/doc/${organization.value}/tiki-core_2.12",
+    micrositeGithubOwner := "pepegar",
+    micrositeGithubRepo := "tiki",
+    micrositeHighlightTheme := "tomorrow",
+    micrositePushSiteWith := GitHub4s,
+    micrositeGithubToken := sys.env.get("GITHUB_TOKEN"),
+    micrositeCompilingDocsTool := WithMdoc,
+    mdocIn := tutSourceDirectory.value
+)
 
 lazy val skipOnPublishSettings = Seq(
   skip in publish := true,
